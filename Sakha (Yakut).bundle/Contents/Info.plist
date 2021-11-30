@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>org.sil.ukelele.keyboardlayout.sakha(yakut)</string>
+	<key>CFBundleName</key>
+	<string>Sakha (Yakut)</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>KLInfo_Sakha (Yakut)</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISInputSourceID</key>
+		<string>org.sil.ukelele.keyboardlayout.sakha(yakut).sakha(yakut)</string>
+		<key>TISIntendedLanguage</key>
+		<string>sah</string>
+	</dict>
+	<key>KLInfo_Sakha (Yakut) Latin</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISInputSourceID</key>
+		<string>org.sil.ukelele.keyboardlayout.sakha(yakut).sakha(yakut)latin</string>
+		<key>TISIntendedLanguage</key>
+		<string>sah</string>
+	</dict>
+	<key>KLInfo_Sakha (Yakut) Latin – PC</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISInputSourceID</key>
+		<string>org.sil.ukelele.keyboardlayout.sakha(yakut).sakha(yakut)latin–pc</string>
+		<key>TISIntendedLanguage</key>
+		<string>sah</string>
+	</dict>
+	<key>KLInfo_Sakha (Yakut) – PC</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISInputSourceID</key>
+		<string>org.sil.ukelele.keyboardlayout.sakha(yakut).sakha(yakut)–pc</string>
+		<key>TISIntendedLanguage</key>
+		<string>sah</string>
+	</dict>
+</dict>
+</plist>
