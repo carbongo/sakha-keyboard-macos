@@ -8,7 +8,7 @@ Layouts are based on default Russian and English (UK).
 1. Download the latest version [from releases](https://github.com/carbongo/sakha-keyboard-macos/releases).
 2. Open **Terminal**. Go to the downloaded bundle directory. Type in the following:
 ```
-cp -r Sakha\ (Yakut).bundle ~/Library/Keyboard\ Layouts/
+cp -r Sakha\ \(Yakut\).bundle ~/Library/Keyboard\ Layouts/
 ```
 3. Restart your Mac.
 4. Open **System Preferences**, and select the **Keyboard preferences**. 
