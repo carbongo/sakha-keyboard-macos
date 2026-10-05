@@ -1,6 +1,6 @@
 # Contributing
 
-**English** · [Сахалыы](CONTRIBUTING.sah.md)
+**English** · [Русский](CONTRIBUTING.ru.md) · [Сахалыы](CONTRIBUTING.sah.md)
 
 Native speakers' feedback is the most valuable contribution. If a letter is in an awkward place, [open an issue](https://github.com/carbongo/sakha-keyboard-macos/issues/new/choose).
 

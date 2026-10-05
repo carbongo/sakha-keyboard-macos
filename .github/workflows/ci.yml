@@ -16,3 +16,5 @@ jobs:
           git diff --exit-code || { echo "::error::Run python3 build.py and commit the result"; exit 1; }
       - name: Lint shell scripts
         run: shellcheck install.sh tools/package.sh packaging/*.command
+      - name: Translations match the English docs
+        run: python3 tools/check-translations.py

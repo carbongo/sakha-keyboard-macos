@@ -5,6 +5,8 @@
 **Mac-ка сахалыы суруй — нууччалыы да, английскайдыы да биир да буукубаны сүтэрбэккэ.**
 
 [![Release](https://img.shields.io/github/v/release/carbongo/sakha-keyboard-macos?label=release)](https://github.com/carbongo/sakha-keyboard-macos/releases/latest)
+[![CI](https://github.com/carbongo/sakha-keyboard-macos/actions/workflows/ci.yml/badge.svg)](https://github.com/carbongo/sakha-keyboard-macos/actions/workflows/ci.yml)
+![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 [English](README.md) · [Русский](README.ru.md) · **Сахалыы**
@@ -15,10 +17,10 @@
 
 | Раскладка | Тугар олоҕурар | Саха буукубалара ханна баалларый |
 |---|---|---|
-| **Sakha (Windows)** | Нуучча (Mac) | Цифра кэккэтигэр, Windows «Саха» раскладкатын курдук |
-| **Sakha (Russian)** | Нуучча (Mac) | **Opt** + маарынныыр нуучча буукубата |
-| **Sakha (Latin)** | US | Уопсай түүр латиницата |
-| **Sakha (Novgorodov)** | US | Новгородов алпаабыта (1920-с сыллар) |
+| [**Sakha (Windows)**](#sakha-windows) | Нуучча (Mac) | Цифра кэккэтигэр, Windows «Саха» раскладкатын курдук |
+| [**Sakha (Russian)**](#sakha-russian) | Нуучча (Mac) | **Opt** + маарынныыр нуучча буукубата |
+| [**Sakha (Latin)**](#sakha-latin) | US | Уопсай түүр латиницата |
+| [**Sakha (Novgorodov)**](#sakha-novgorodov) | US | Новгородов алпаабыта (1920-с сыллар) |
 
 > macOS 27-гэ бэйэтин *Yakut* раскладката баар, ол эрээри кини ц, г, ъ, ф уонна ж оннуларын ылар. Бу раскладкалар туох да буукубаны солбуйбаттар.
 
@@ -30,9 +32,31 @@
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash
 ```
 
-Скрипт ханнык раскладкалары эбэри ыйытыа; Return баттаатаххына, **Sakha (Windows)** эрэ эбиллиэ. Раскладканы **Ctrl+Space** эбэтэр **🌐 Globe** көмөтүнэн уларыт. Систематтан тахсар наадата суох.
+Скрипт ханнык раскладкалары эбэри ыйытыа; Return баттаатаххына, **Sakha (Windows)** эрэ эбиллиэ. Раскладканы **Ctrl+Space** эбэтэр **🌐 Globe** көмөтүнэн уларыт. Систематтан тахсар уонна перезагрузка наадата суох.
 
-Сотуу: `… | bash -s -- -u`. Бары параметрдар: `… | bash -s -- -h`.
+<details>
+<summary>Параметрдар</summary>
+
+```sh
+# раскладкалары ыйытыыта суох тал
+curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -l sakha-windows,sakha-latin
+
+# түөрт раскладка барыта, ыйытыыта суох
+curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -l all
+
+# сотуу
+curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -u
+```
+
+| Флаг | |
+|---|---|
+| `-l, --layouts` | `sakha-windows`, `sakha-russian`, `sakha-latin`, `sakha-novgorodov` эбэтэр `all` |
+| `-y, --yes` | Ыйыппат; Sakha (Windows) эрэ эбэр |
+| `--no-enable` | Туруорар эрэ; раскладкалары «Системные настройки» иһигэр бэйэҥ эп |
+| `-v, --version` | Анал релиз, холобур `v2.0.0` |
+| `-u, --uninstall` | Барытын сотор |
+
+</details>
 
 ### 2-с вариант: Хачайдаан баран иккитэ баттаа
 
@@ -47,6 +71,13 @@ curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/
 Сотуу: **Uninstall Sakha Keyboard.command**. Кини туспа файл, онон кэлиэхэ эмиэ биирдэ «Всё равно открыть» хардыыта наада.
 
 > macOS 15 уонна онтон саҥа версияларга уҥа баттааһын → «Открыть» бу сэрэтиини аһарбат. Настройкаларга «Всё равно открыть» туттун.
+
+<details>
+<summary>Илиинэн туруоруу</summary>
+
+`Sakha.bundle`-ы `~/Library/Keyboard Layouts` иһигэр куопуйалаа. Систематтан тахсан баран төттөрү киир, онтон раскладкалары «Системные настройки» → «Клавиатура» → «Ввод текста» → «Изменить» → «+» иһигэр эп (*Sakha* диэн көрдөө).
+
+</details>
 
 ## 🗺️ Раскладкалар
 
@@ -79,6 +110,20 @@ Windows саха раскладката (KBDYAK), Mac нуучча раскла�
 ## ❓ Ыйытыылар
 
 <details>
+<summary><b>Систематтан тахсар наадата чахчы суох дуо?</b></summary>
+
+Суох. Туруорааччы бандылы macOS Text Input Sources API нөҥүө бэлиэтиир, онон раскладкалар тута көстөллөр. Урут аһыллыбыт сорох программалар кинилэри саҥаттан холбонно эрэ көрүөхтэрин сөп.
+
+</details>
+
+<details>
+<summary><b>Тоҕо macOS туруорааччыны «бэрэбиэркэлээбэтим» диир? Куттала суох дуо?</b></summary>
+
+macOS бу суругу Apple нотаризациялаабатах хачайдаммыт хас биирдии скрипкэ эбэтэр программаҕа көрдөрөр. Ол вирус булулунна диэн буолбатах. Нотаризацияҕа төлөбүрдээх Apple Developer чилиэнэ наада, оттон бу босхо бырайыакка ол суох. `.command` файллар [`install.sh`](install.sh) эрэ холбууллар, кини `Sakha.bundle`-ы `~/Library/Keyboard Layouts` иһигэр куопуйалыыр уонна раскладкалары киирии менютугар эбэр. Терминал командата сэрэтиитэ суох, тоҕо диэтэххэ `curl` нөҥүө ылыллыбыт файллар хачайдаммыт курдук бэлиэтэммэттэр.
+
+</details>
+
+<details>
 <summary><b>Cmd+C / Cmd+V үлэлиэ дуо?</b></summary>
 
 Үлэлиир. Cmd уонна Ctrl холбоһуктара бары раскладкаларга куруутун US QWERTY миэстэлэринэн үлэлииллэр.
@@ -105,7 +150,7 @@ Apple **РУ** уонна **A** курдук: **СА** — Sakha (Windows), **С
 
 ## 🤝 Кыттыы
 
-Этиилэргин уонна алҕастары [Issues](https://github.com/carbongo/sakha-keyboard-macos/issues) суруй. Сиһилии — [CONTRIBUTING.sah.md](CONTRIBUTING.sah.md).
+Саҥа буукубалар, ордук табыгастаах миэстэлэр уонна алҕас туһунан суруктар — барыта үөрүүнү кытта ылыллар. [CONTRIBUTING.sah.md](CONTRIBUTING.sah.md) көр. Раскладкалары [`build.py`](build.py) оҥорор, онон уларытыы үксүгэр биир строка.
 
 ## Лицензия
 

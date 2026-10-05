@@ -1,6 +1,6 @@
 # sakha-keyboard-macos
 
-macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installers. README.md (+ `.ru`, `.sah`) is the user-facing guide; CONTRIBUTING.md (+ `.sah`) the contributor one. Keep translations in step.
+macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installers. README.md (+ `.ru`, `.sah`) is the user-facing guide; CONTRIBUTING.md (+ `.ru`, `.sah`) the contributor one.
 
 ## Commands
 
@@ -13,6 +13,7 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 
 ## Constraints
 
+- Translations are full parity with the English file, never summaries: any README/CONTRIBUTING edit updates `.ru` and `.sah` in the same commit. `python3 tools/check-translations.py` (in CI) checks structure; Sakha wording goes to the owner for review.
 - Never move or replace a Russian or English base letter: Sakha letters go on spare keys, the number row or Opt.
 - `Sakha.bundle/` and `docs/layouts/` are generated: edit `build.py`.
 - Layout IDs (-19001…-19004) are shared by `build.py` and `install.sh`; change both together.

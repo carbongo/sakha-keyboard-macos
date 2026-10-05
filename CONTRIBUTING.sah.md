@@ -1,6 +1,6 @@
 # Кыттыы
 
-[English](CONTRIBUTING.md) · **Сахалыы**
+[English](CONTRIBUTING.md) · [Русский](CONTRIBUTING.ru.md) · **Сахалыы**
 
 Саха тылынан саҥарааччылар санаалара — саамай күндү кыттыы. Ханнык эмэ буукуба табыгаһа суох сиргэ турар буоллаҕына, [issue ас](https://github.com/carbongo/sakha-keyboard-macos/issues/new/choose).
 
