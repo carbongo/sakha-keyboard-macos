@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>Sakha</string>
 	<key>CFBundleVersion</key>
-	<string>2.3.0</string>
+	<string>2.3.1</string>
 	<key>KLInfo_Sakha (Windows)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>

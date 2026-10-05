@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.3.1] - 2026-10-05
+
+### Fixed
+- Reinstalling no longer piles up copies of a layout in System Settings. Running the installer once repairs the settings; a logout clears the copies already listed.
+
 ## [2.3.0] - 2026-10-05
 
 ### Added

@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 BUNDLE = ROOT / "Sakha.bundle"
 BUNDLE_ID = "com.carbongo.keyboardlayout.sakha"
-VERSION = "2.3.0"
+VERSION = "2.3.1"
 
 # Mac virtual keycodes, by the US keycap label
 K = {

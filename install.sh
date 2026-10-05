@@ -109,27 +109,53 @@ tis() {  # register <bundle> [id|name ...]  |  remove [id|name ...]
   local js="$TMP/tis.js"
   cat >"$js" <<'EOF'
 ObjC.import('Carbon');
-function run(argv) {
-  const action = argv.shift();
-  if (action === 'register') $.TISRegisterInputSource($.NSURL.fileURLWithPath(argv.shift()));
-  const wanted = argv.map(a => { const [id, name] = a.split('|'); return { id: Number(id), name: name }; });
-  const prefs = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.HIToolbox');
-  const key = 'AppleEnabledInputSources';
-  const current = ObjC.deepUnwrap(prefs.arrayForKey(key)) || [];
-  let next = current.filter(e => !wanted.some(w => e['KeyboardLayout ID'] === w.id));
-  if (action === 'register') {
-    next = next.concat(wanted.map(w => ({ 'InputSourceKind': 'Keyboard Layout', 'KeyboardLayout ID': w.id, 'KeyboardLayout Name': w.name })));
-  }
-  prefs.setObjectForKey($(next), key);
-  prefs.synchronize;
-  // How many of our layouts macOS now reports as enabled
-  const live = ObjC.castRefToObject($.TISCreateInputSourceList($(), false));
+function ours(includeDisabled) {  // how many of our layouts macOS lists
+  const list = ObjC.castRefToObject($.TISCreateInputSourceList($(), includeDisabled));
   let count = 0;
-  for (let i = 0; i < live.count; i++) {
-    const id = ObjC.castRefToObject($.TISGetInputSourceProperty(live.objectAtIndex(i), $.kTISPropertyInputSourceID)).js;
+  for (let i = 0; i < list.count; i++) {
+    const id = ObjC.castRefToObject($.TISGetInputSourceProperty(list.objectAtIndex(i), $.kTISPropertyInputSourceID)).js;
     if (id.startsWith('com.carbongo.keyboardlayout.sakha.')) count++;
   }
   return count;
+}
+function run(argv) {
+  const action = argv.shift();
+  const bundle = action === 'register' ? argv.shift() : null;
+  // Registering a bundle macOS already knows lists its layouts twice.
+  if (bundle && ours(true) === 0) $.TISRegisterInputSource($.NSURL.fileURLWithPath(bundle));
+  const wanted = argv.map(a => { const [id, name] = a.split('|'); return { id: Number(id), name: name }; });
+  const prefs = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.HIToolbox');
+  const key = 'AppleEnabledInputSources';
+  // Layout IDs must stay <integer>: a JS number is saved as <real>, which macOS no longer matches
+  // to the layout, so it lists it again — once per install. Earlier installs left reals; fix those too.
+  let hadReal = false;
+  const entry = e => {
+    const d = $.NSMutableDictionary.dictionaryWithDictionary(e);
+    const id = d.objectForKey('KeyboardLayout ID');
+    if (id.isNil()) return d;
+    if ('fd'.includes(id.objCType)) hadReal = true;
+    d.setObjectForKey($.NSNumber.numberWithInt(id.intValue), 'KeyboardLayout ID');
+    return d;
+  };
+  const current = ObjC.unwrap(prefs.arrayForKey(key)) || [];
+  const next = $.NSMutableArray.array;
+  current.forEach(e => {
+    const id = e.objectForKey('KeyboardLayout ID');
+    if (id.isNil() || !wanted.some(w => id.intValue === w.id)) next.addObject(entry(e));
+  });
+  if (action === 'register') {
+    wanted.forEach(w => {
+      const d = $.NSMutableDictionary.dictionary;
+      d.setObjectForKey($('Keyboard Layout'), 'InputSourceKind');
+      d.setObjectForKey($.NSNumber.numberWithInt(w.id), 'KeyboardLayout ID');
+      d.setObjectForKey($(w.name), 'KeyboardLayout Name');
+      next.addObject(d);
+    });
+  }
+  if (hadReal) prefs.removeObjectForKey(key);  // otherwise int == real and the reals stay
+  prefs.setObjectForKey(next, key);
+  prefs.synchronize;
+  return ours(false);  // how many are now enabled
 }
 EOF
   osascript -l JavaScript "$js" "$@" 2>/dev/null
