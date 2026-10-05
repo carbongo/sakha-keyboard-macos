@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "rm -rf site/layouts && cp -R docs/layouts site/layouts",
+  "outputDirectory": "site",
+  "cleanUrls": true
+}

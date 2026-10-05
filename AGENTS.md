@@ -23,3 +23,4 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 
 - `docs/design.md`: why each layout is shaped the way it is; decisions and sources.
 - `docs/installer.md`: how install.sh registers and enables layouts without a logout.
+- `docs/website.md`: the landing page in `site/` and its Vercel deploy.

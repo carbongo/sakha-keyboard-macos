@@ -30,3 +30,7 @@ Temporary Items
 # Agent worktrees
 .claude/
 dist/
+
+# website build output (copied from docs/layouts by vercel.json)
+site/layouts/
+.vercel
