@@ -178,7 +178,7 @@ def info_plist():
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>{'sah-Latn' if base == 'us' else 'sah-Cyrl'}</string>
 	</dict>
