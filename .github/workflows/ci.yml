@@ -13,7 +13,8 @@ jobs:
       - name: Bundle and diagrams match build.py
         run: |
           python3 build.py
-          git diff --exit-code || { echo "::error::Run python3 build.py and commit the result"; exit 1; }
+          python3 tools/build-site.py
+          git diff --exit-code || { echo "::error::Run python3 build.py and tools/build-site.py and commit the result"; exit 1; }
       - name: Lint shell scripts
         run: shellcheck install.sh tools/package.sh packaging/*.command
       - name: Translations match the English docs

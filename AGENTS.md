@@ -5,6 +5,7 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 ## Commands
 
 - Build: `python3 build.py` regenerates `Sakha.bundle` + `docs/layouts/*.svg`. Commit the results; CI fails on drift.
+- Website: `python3 tools/build-site.py` regenerates `site/{,ru/,sah/}index.html` (also needed after a `VERSION` bump). Commit the results.
 - Install the local build: `./install.sh -y` (`-u` uninstalls). Lint: `shellcheck install.sh tools/package.sh packaging/*.command`.
 - Release zip: `tools/package.sh` → `dist/Sakha-Keyboard.zip`.
 - Menu bar badges: `swift tools/make-icons.swift` → `src/icons/*.icns` (Mac only; commit them).
@@ -13,9 +14,9 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 
 ## Constraints
 
-- Translations are full parity with the English file, never summaries: any README/CONTRIBUTING edit updates `.ru` and `.sah` in the same commit. `python3 tools/check-translations.py` (in CI) checks structure; Sakha wording goes to the owner for review.
+- Translations are full parity with the English file, never summaries: any README/CONTRIBUTING/website edit updates `.ru` and `.sah` in the same commit. `python3 tools/check-translations.py` (in CI) checks structure; Sakha wording goes to the owner for review.
 - Never move or replace a Russian or English base letter: Sakha letters go on spare keys, the number row or Opt.
-- `Sakha.bundle/` and `docs/layouts/` are generated: edit `build.py`.
+- `Sakha.bundle/` and `docs/layouts/` are generated: edit `build.py`. `site/**/index.html` is generated: edit `tools/build-site.py` (strings) or `tools/site-template.html`.
 - Layout IDs (-19001…-19004) are shared by `build.py` and `install.sh`; change both together.
 - `xmllint` errors on `&#x0008;` etc. are expected (keylayouts are XML 1.1).
 
@@ -23,3 +24,4 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 
 - `docs/design.md`: why each layout is shaped the way it is; decisions and sources.
 - `docs/installer.md`: how install.sh registers and enables layouts without a logout.
+- `docs/website.md`: the landing page in `site/` and its Vercel deploy.
