@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-10-05
+
+### Added
+- Website: https://sakha-kb.vercel.app, in English, Russian and Sakha.
+- README and CONTRIBUTING in Russian and Sakha.
+
 ### Fixed
 - Icons are filled badges like Apple's (**A**, **Ca**): dark on a light menu bar or menu, white on a dark one or when highlighted, and still visible on the switcher's blue selection.
 - System Settings no longer shows a second "Sakha" language: the Cyrillic layouts sit under Apple's **Sakha**, the Latin ones under **Sakha (Latin)**.
