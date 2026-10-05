@@ -26,7 +26,7 @@ Four layouts, one install, no restart:
 
 ## 🚀 Install
 
-### Option 1: Terminal (one line)
+### Option 1: Terminal (recommended, no security warning)
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash
@@ -60,12 +60,17 @@ curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/
 
 ### Option 2: Download and double-click
 
+> [!WARNING]
+> **macOS blocks this installer the first time.** The first double-click shows *"Apple could not verify 'Install Sakha Keyboard.command' is free of malware…"*. That's expected. macOS shows this for any downloaded script that isn't notarised by Apple, and notarisation needs a paid Apple Developer account. The script is [`install.sh`](install.sh), so you can read exactly what it does. If you'd rather not see the warning at all, use [Option 1](#option-1-terminal-recommended-no-security-warning).
+
 1. Download **[Sakha-Keyboard.zip](https://github.com/carbongo/sakha-keyboard-macos/releases/latest/download/Sakha-Keyboard.zip)** and open it.
-2. Double-click **Install Sakha Keyboard.command** and tick the layouts you want.
+2. Double-click **Install Sakha Keyboard.command**. macOS shows the warning, so click **Done**.
+3. Open **System Settings → Privacy & Security**, scroll down to *"Install Sakha Keyboard.command" was blocked…* and click **Open Anyway**. Confirm with your password or Touch ID.
+4. Double-click **Install Sakha Keyboard.command** again, click **Open**, and tick the layouts you want.
 
-> **"Apple could not verify…"?** The installer isn't notarised. Click **Done**, open **System Settings → Privacy & Security**, click **Open Anyway**, and run it again.
+To remove the layouts, double-click **Uninstall Sakha Keyboard.command**. It's a separate file, so it needs the same **Open Anyway** step once.
 
-To remove the layouts, double-click **Uninstall Sakha Keyboard.command**.
+> Right-click → **Open** no longer gets past this warning on macOS 15 and later. Use **Open Anyway** in Privacy & Security instead.
 
 <details>
 <summary>Manual install</summary>
@@ -108,6 +113,13 @@ The 1920s Novgorodov alphabet, typed with the closest IPA letters: ɯ ɣ ɟ ŋ �
 <summary><b>Do I really not need to log out?</b></summary>
 
 No logout needed. The installer registers the bundle through macOS's Text Input Sources API, so the layouts appear immediately. Some apps that were already open may pick them up only after a relaunch.
+
+</details>
+
+<details>
+<summary><b>Why does macOS say it "could not verify" the installer? Is it safe?</b></summary>
+
+macOS shows that message for every downloaded script or app that Apple hasn't notarised. It doesn't mean malware was found. Notarising requires a paid Apple Developer membership, and this free project doesn't have one. The `.command` files only run [`install.sh`](install.sh), which copies `Sakha.bundle` to `~/Library/Keyboard Layouts` and adds the layouts to your input menu. The terminal one-liner shows no warning, because files fetched with `curl` aren't flagged as downloads.
 
 </details>
 
