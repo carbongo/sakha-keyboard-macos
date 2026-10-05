@@ -11,7 +11,7 @@ macOS 27 ships `com.apple.keylayout.Yakut`, which puts ү ҥ ҕ ө һ in place o
 - Cmd and Ctrl layers are always US QWERTY, so shortcuts don't change.
 - Caps Lock = Shift for letter outputs.
 - US Opt dead keys (e u i n `) only type their spacing accent.
-- Icons are in `src/icons`. macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaRussian`, …).
+- No icons (modern macOS shows text badges). macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaRussian`, …).
 
 ## Decisions
 

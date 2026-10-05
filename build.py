@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 BUNDLE = ROOT / "Sakha.bundle"
 BUNDLE_ID = "com.carbongo.keyboardlayout.sakha"
+VERSION = "2.0.0"
 
 # Mac virtual keycodes, by the US keycap label
 K = {
@@ -103,11 +104,11 @@ novgorodov.update({  # punctuation pushed off [ ] ; ' \
     K["/"]: (None, None, "\\", "|"),
 })
 
-LAYOUTS = [  # (name, id, base, overrides, icon)
-    ("Sakha (Russian)", -19001, "russian", sakha_russian, "sakha-pc.icns"),
-    ("Russian (Sakha)", -19002, "russian", russian_sakha, "sakha.icns"),
-    ("Sakha (Latin)", -19003, "us", sakha_latin, "sakha-latin.icns"),
-    ("Sakha (Novgorodov)", -19004, "us", novgorodov, "sakha-novgorodov.icns"),
+LAYOUTS = [  # (name, id, base, overrides)
+    ("Sakha (Russian)", -19001, "russian", sakha_russian),
+    ("Russian (Sakha)", -19002, "russian", russian_sakha),
+    ("Sakha (Latin)", -19003, "us", sakha_latin),
+    ("Sakha (Novgorodov)", -19004, "us", novgorodov),
 ]
 
 MODIFIERS = [  # keyMap index → modifier combos (Apple keylayout syntax)
@@ -176,12 +177,10 @@ def info_plist():
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
-		<key>TISIconIsTemplate</key>
-		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>{'sah-Latn' if base == 'us' else 'sah-Cyrl'}</string>
 	</dict>
-""" for name, _, base, _, _ in LAYOUTS)
+""" for name, _, base, _ in LAYOUTS)
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -191,10 +190,68 @@ def info_plist():
 	<key>CFBundleName</key>
 	<string>Sakha</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>{VERSION}</string>
 {entries}</dict>
 </plist>
 """
+
+
+DIAGRAM_ROWS = [  # (label, width in key units); single characters are keys from K
+    [*"`1234567890-=", ("delete", 1.5)],
+    [("tab", 1.5), *"qwertyuiop[]\\"],
+    [("caps", 1.75), *"asdfghjkl;'", ("return", 1.75)],
+    [("shift", 2.25), *"zxcvbnm,./", ("shift", 2.25)],
+]
+DIAGRAM_CSS = """
+.k{fill:#f6f8fa;stroke:#d0d7de}.c{fill:#ddf4ff;stroke:#54aeff}
+text{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#1f2328}
+.o{fill:#bf3989}.m{fill:#8c959f;font-size:11px}
+@media (prefers-color-scheme:dark){.k{fill:#161b22;stroke:#30363d}.c{fill:#0c2d6b;stroke:#1f6feb}
+text{fill:#e6edf3}.o{fill:#ff80c8}.m{fill:#6e7681}}
+"""
+
+
+def diagram(t, base_name):
+    """SVG keyboard: Shift/base on the left, added Opt (Shift+Opt) on the right in accent; changed keys tinted."""
+    base = json.loads((ROOT / "src/base" / f"{base_name}.json").read_text())
+    unit, gap = 60, 5
+    out = []
+    for r, row in enumerate(DIAGRAM_ROWS):
+        x, y = 0.0, r * (unit + gap)
+        for key in row:
+            label, width = (None, key[1]) if isinstance(key, tuple) else (key, 1)
+            w = width * unit + (width - 1) * gap
+            if label is None:
+                out.append(f'<rect class="k" x="{x}" y="{y}" width="{w}" height="{unit}" rx="7"/>'
+                           f'<text class="m" x="{x + 8}" y="{y + unit - 9}">{key[0]}</text>')
+            else:
+                code = str(K[label])
+                vals = {layer: t[layer].get(code, "") for layer in ("base", "shift", "opt", "shiftopt")}
+                was = {layer: base[layer].get(code, base["capsopt"].get(code, "")) for layer in vals}
+                changed = {layer: vals[layer] != was[layer] for layer in vals}
+                tint = "c" if changed["base"] or changed["shift"] else "k"
+                out.append(f'<rect class="{tint}" x="{x}" y="{y}" width="{w}" height="{unit}" rx="7"/>')
+                legends = [("base", "shift", "", x + 8, 20)]
+                if changed["opt"] or changed["shiftopt"]:  # only show Opt where this project adds something
+                    legends.append(("opt", "shiftopt", ' class="o"', x + unit / 2 + 4, 14))
+                for low, high, cls, tx, size in legends:
+                    lo, hi = vals[low], vals[high]
+                    if not (lo.isprintable() and hi.isprintable()):
+                        continue
+                    if is_letter(lo) and hi == upper(lo):  # one legend for letter pairs: capital on base, small on Opt
+                        text = hi if not cls else lo
+                        out.append(f'<text{cls} x="{tx}" y="{y + unit - 12}" font-size="{size}">{xml_escape(text)}</text>')
+                    else:
+                        out.append(f'<text{cls} x="{tx}" y="{y + 22}" font-size="{size - 4}">{xml_escape(hi)}</text>'
+                                   f'<text{cls} x="{tx}" y="{y + unit - 10}" font-size="{size - 4}">{xml_escape(lo)}</text>')
+            x += w + gap
+    width, height = 14.5 * unit + 13 * gap, 4 * unit + 3 * gap
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 {width + 4} {height + 4}" width="{width + 4}">'
+            f"<style>{DIAGRAM_CSS}</style>{''.join(out)}</svg>\n")
+
+
+def slug(name):
+    return name.lower().replace(" (", "-").rstrip(")")
 
 
 def main():
@@ -202,10 +259,12 @@ def main():
     res = BUNDLE / "Contents/Resources"
     res.mkdir(parents=True)
     (BUNDLE / "Contents/Info.plist").write_text(info_plist())
-    for name, layout_id, base, overrides, icon in LAYOUTS:
-        (res / f"{name}.keylayout").write_text(keylayout(name, layout_id, tables(base, overrides)))
-        shutil.copy(ROOT / "src/icons" / icon, res / f"{name}.icns")
-    print(f"built {BUNDLE.name}: {', '.join(n for n, *_ in LAYOUTS)}")
+    (ROOT / "docs/layouts").mkdir(parents=True, exist_ok=True)
+    for name, layout_id, base, overrides in LAYOUTS:
+        t = tables(base, overrides)
+        (res / f"{name}.keylayout").write_text(keylayout(name, layout_id, t))
+        (ROOT / "docs/layouts" / f"{slug(name)}.svg").write_text(diagram(t, base))
+    print(f"built {BUNDLE.name} v{VERSION}: {', '.join(n for n, *_ in LAYOUTS)}")
 
 
 if __name__ == "__main__":

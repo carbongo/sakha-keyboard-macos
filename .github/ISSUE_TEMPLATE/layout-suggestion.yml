@@ -1,0 +1,18 @@
+name: Layout suggestion
+description: A letter is missing, awkward to reach, or in the wrong place
+labels: [layout]
+body:
+  - type: dropdown
+    id: layout
+    attributes:
+      label: Layout
+      options: [Sakha (Russian), Russian (Sakha), Sakha (Latin), Sakha (Novgorodov), A new layout]
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What should change, and why?
+      placeholder: "e.g. ҥ is used more often than ... so it should be on ..."
+    validations:
+      required: true

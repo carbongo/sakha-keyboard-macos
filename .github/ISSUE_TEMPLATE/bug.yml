@@ -1,0 +1,23 @@
+name: Bug
+description: The installer fails or a key types the wrong thing
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Paste the installer output if it failed.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "e.g. 27.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: keyboard
+    attributes:
+      label: Keyboard
+      options: [Built-in MacBook keyboard, Apple external keyboard, Other external keyboard]

@@ -7,12 +7,10 @@
 	<key>CFBundleName</key>
 	<string>Sakha</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>2.0.0</string>
 	<key>KLInfo_Sakha (Russian)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
-		<false/>
-		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Cyrl</string>
@@ -21,8 +19,6 @@
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
-		<key>TISIconIsTemplate</key>
-		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Cyrl</string>
 	</dict>
@@ -30,16 +26,12 @@
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
-		<key>TISIconIsTemplate</key>
-		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Latn</string>
 	</dict>
 	<key>KLInfo_Sakha (Novgorodov)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
-		<false/>
-		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Latn</string>
