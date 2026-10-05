@@ -1,7 +1,7 @@
-// Draws the input-menu icons: bare white letters, like the labels macOS shows for its own layouts in the
-// input switcher (РУ, A). Keyboard layouts can't use Apple's text labels (TISIconLabels works only for
-// input methods), so this square image is used everywhere. It is not a template: a template turns dark
-// in the switcher and vanishes in its blue selection.
+// Draws the input-menu icons: bare letters, like the labels macOS shows for its own layouts (РУ, A).
+// Keyboard layouts can't use Apple's text labels (TISIconLabels works only for input methods), so this
+// square image is used everywhere. It is a template (TISIconIsTemplate), so like the native labels it is
+// dark on a light menu bar or menu and turns white on a dark one or when highlighted.
 // Usage: swift tools/make-icons.swift   → src/icons/*.icns (commit them; build.py copies them)
 import AppKit
 
@@ -28,7 +28,7 @@ func render(_ text: String, pixels: Int) -> Data {
   }
   let capCenter = font.capHeight / 2 - font.descender  // centre the capitals, not the line box
   let origin = NSPoint(x: 8 * s - size.width / 2, y: 8 * s - capCenter)
-  (text as NSString).draw(at: origin, withAttributes: [.font: font, .foregroundColor: NSColor.white])
+  (text as NSString).draw(at: origin, withAttributes: [.font: font, .foregroundColor: NSColor.black])
   NSGraphicsContext.restoreGraphicsState()
   return rep.representation(using: .png, properties: [:])!
 }

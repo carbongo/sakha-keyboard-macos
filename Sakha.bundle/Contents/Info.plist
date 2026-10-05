@@ -13,25 +13,25 @@
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
-		<false/>
+		<true/>
 		<key>TISIntendedLanguage</key>
-		<string>sah-Cyrl</string>
+		<string>sah</string>
 	</dict>
 	<key>KLInfo_Sakha (Russian)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
-		<false/>
+		<true/>
 		<key>TISIntendedLanguage</key>
-		<string>sah-Cyrl</string>
+		<string>sah</string>
 	</dict>
 	<key>KLInfo_Sakha (Latin)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
-		<false/>
+		<true/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Latn</string>
 	</dict>
@@ -40,7 +40,7 @@
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
-		<false/>
+		<true/>
 		<key>TISIntendedLanguage</key>
 		<string>sah-Latn</string>
 	</dict>

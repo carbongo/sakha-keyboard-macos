@@ -144,7 +144,7 @@ The warning is written for input *methods*, which are real programs that do see 
 <details>
 <summary><b>What do the menu bar badges mean?</b></summary>
 
-Like Apple's **РУ** and **A**, each layout shows short letters: **СА** for Sakha (Windows), **СР** for Sakha (Russian), **SA** for Sakha (Latin) and **NV** for Sakha (Novgorodov). Apple's own boxed badges can only be drawn by macOS for its own layouts, so ours are plain white letters. They are always white, so they're hard to see on a light menu bar. If you still see old flag icons, log out and back in once so macOS refreshes its cache.
+Like Apple's **РУ** and **A**, each layout shows short letters: **СА** for Sakha (Windows), **СР** for Sakha (Russian), **SA** for Sakha (Latin) and **NV** for Sakha (Novgorodov). Apple's own boxed badges can only be drawn by macOS for its own layouts, so ours are plain letters. Like Apple's, they turn dark or white to match the menu bar and menus. If you still see old flag icons, log out and back in once so macOS refreshes its cache.
 
 </details>
 

@@ -11,7 +11,8 @@ macOS 27 ships `com.apple.keylayout.Yakut`, which puts ү ҥ ҕ ө һ in place o
 - Cmd and Ctrl layers are always US QWERTY, so shortcuts don't change.
 - Caps Lock = Shift for letter outputs.
 - US Opt dead keys (e u i n `) only type their spacing accent.
-- Icons: bare white letters (СА, СР, SA, NV; SF semibold, 8 pt caps), **not** template, from `tools/make-icons.swift`. Native labels are system-drawn from `TISIconLabels`, which works only for input methods; a layout gets one square .icns for every context (TIFF/PDF ignored). Template icons turn dark in the switcher and vanish in its blue selection. Trade-off: the icon stays white on a light menu bar. No icon = generic keyboard glyph. macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaWindows`, …).
+- `TISIntendedLanguage`: `sah` for Cyrillic (Apple's convention for a language's default script), so System Settings lists them under Apple's **Sakha** next to its Yakut layout; `sah-Latn` for Latin → **Sakha (Latin)**. `sah-Cyrl` made a second "Sakha" row.
+- Icons: bare letters (СА, СР, SA, NV; SF semibold, 8 pt caps), **template** (`TISIconIsTemplate`), from `tools/make-icons.swift`, so they adapt like native ones in the menu bar and input menu. Native labels are system-drawn from `TISIconLabels`, which works only for input methods; a layout gets one square .icns for every context (TIFF/PDF ignored). Trade-off: the switcher draws templates dark, also on its blue selection (v2.2.1 tried always-white instead: invisible on a light menu bar). No icon = generic keyboard glyph. macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaWindows`, …).
 
 ## Decisions
 
