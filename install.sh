@@ -118,10 +118,17 @@ function run(argv) {
   }
   prefs.setObjectForKey($(next), key);
   prefs.synchronize;
-  return next.length;
+  // How many of our layouts macOS now reports as enabled
+  const live = ObjC.castRefToObject($.TISCreateInputSourceList($(), false));
+  let count = 0;
+  for (let i = 0; i < live.count; i++) {
+    const id = ObjC.castRefToObject($.TISGetInputSourceProperty(live.objectAtIndex(i), $.kTISPropertyInputSourceID)).js;
+    if (id.startsWith('com.carbongo.keyboardlayout.sakha.')) count++;
+  }
+  return count;
 }
 EOF
-  osascript -l JavaScript "$js" "$@"
+  osascript -l JavaScript "$js" "$@" 2>/dev/null
 }
 
 # ── commands ────────────────────────────────────────────────────────────
@@ -136,6 +143,14 @@ fetch_bundle() {  # prints the path of a Sakha.bundle to install
   local found; found=$(find "$TMP" -name "$BUNDLE" -type d -maxdepth 3 | head -1)
   [[ -n $found ]] || die "The release archive has no $BUNDLE"
   printf '%s' "$found"
+}
+
+# System Settings keeps its own copy of layout names and icons, so it shows stale icons (e.g. old flags)
+# until a logout. Only that copy is cleared: wiping the main IntlDataCache races with registration.
+clear_caches() {
+  local cache; cache=$(getconf DARWIN_USER_CACHE_DIR 2>/dev/null) || return 0
+  rm -f "$cache"com.apple.Keyboard-Settings.extension/com.apple.IntlDataCache.le* 2>/dev/null || true
+  killall -q "System Settings" 2>/dev/null || true  # reopens with fresh data
 }
 
 install() {
@@ -153,7 +168,9 @@ install() {
   rm -rf "${DEST:?}/$BUNDLE"
   cp -R "$src" "$DEST/"
   xattr -dr com.apple.quarantine "$DEST/$BUNDLE" 2>/dev/null || true
+  touch "$DEST" "$DEST/$BUNDLE"  # newer than macOS's layout cache → it rescans the folder
   ok "Copied to ~/Library/Keyboard Layouts"
+  clear_caches
 
   local keys=() ids=() names=() k l
   if [[ $ENABLE == 1 ]]; then
@@ -166,8 +183,18 @@ install() {
   done
   [[ ${#keys[@]} -gt 0 && ${#ids[@]} -eq 0 ]] && warn "Unknown layout name(s): ${keys[*]}"
 
-  tis register "$DEST/$BUNDLE" ${ids[@]+"${ids[@]}"} >/dev/null
-  ok "Registered with macOS — no logout needed"
+  # Right after a cache reset macOS can drop the first registration, so check and retry.
+  local live=0 attempt
+  for attempt in 1 2 3 4 5; do
+    live=$(tis register "$DEST/$BUNDLE" ${ids[@]+"${ids[@]}"}) || live=0
+    [[ $live -ge ${#ids[@]} ]] && break
+    sleep "$attempt"
+  done
+  if [[ $live -lt ${#ids[@]} ]]; then
+    warn "macOS hasn't picked the layouts up yet. Log out and back in, or run the installer again."
+  else
+    ok "Registered with macOS — no logout needed"
+  fi
   for l in ${names[@]+"${names[@]}"}; do ok "Added $l to the input menu"; done
 
   say ""
@@ -185,6 +212,7 @@ uninstall() {
   for l in "${LAYOUTS[@]}"; do all+=("$(field "$l" 1)|$(field "$l" 2)"); done
   tis remove "${all[@]}" >/dev/null || true
   rm -rf "${DEST:?}/$BUNDLE"
+  clear_caches
   ok "Removed from the input menu and ~/Library/Keyboard Layouts"
   [[ $GUI == 1 ]] && dialog "Sakha keyboard layouts were removed."
   return 0

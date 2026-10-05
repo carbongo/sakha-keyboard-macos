@@ -131,9 +131,20 @@ Yes. Cmd and Ctrl shortcuts always use the US QWERTY positions in every layout.
 </details>
 
 <details>
-<summary><b>Where are the flag icons?</b></summary>
+<summary><b>System Settings says "The developer can access anything you type". Do you collect anything?</b></summary>
 
-Modern macOS shows a text badge for each layout in the menu bar instead of a flag, so there are none.
+**No. Nothing is collected, sent or stored.**
+
+macOS 27 shows that label on every keyboard layout that doesn't come from Apple, whatever it contains. These layouts contain no code at all: `Sakha.bundle` is an `Info.plist`, four `.keylayout` files (plain XML tables like "this key types ҕ") and four icons. Nothing runs while you type. The installer runs once, copies those files and exits. It doesn't stay running, has no network access after the download, and has no telemetry.
+
+The warning is written for input *methods*, which are real programs that do see your keystrokes. Apple uses the same wording for plain layouts. You can check every file in this repository.
+
+</details>
+
+<details>
+<summary><b>What do the menu bar badges mean?</b></summary>
+
+Like Apple's **A** and **РУ**, each layout shows a short badge: a filled **СА** for Sakha (Windows), an outlined **СА** for Sakha (Russian), a filled **SA** for Sakha (Latin) and an outlined **SA** for Sakha (Novgorodov). If you still see old flag icons, log out and back in once so macOS refreshes its cache.
 
 </details>
 

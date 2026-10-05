@@ -7,6 +7,7 @@ macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installer
 - Build: `python3 build.py` regenerates `Sakha.bundle` + `docs/layouts/*.svg`. Commit the results; CI fails on drift.
 - Install the local build: `./install.sh -y` (`-u` uninstalls). Lint: `shellcheck install.sh tools/package.sh packaging/*.command`.
 - Release zip: `tools/package.sh` → `dist/Sakha-Keyboard.zip`.
+- Menu bar badges: `swift tools/make-icons.swift` → `src/icons/*.icns` (Mac only; commit them).
 - Release: bump `VERSION` in build.py and add a CHANGELOG section, rebuild, push tag `vX.Y.Z` (Actions publishes it).
 - Re-dump a base layout: `swift tools/dump-layout.swift com.apple.keylayout.Russian > src/base/russian.json`.
 
