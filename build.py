@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 BUNDLE = ROOT / "Sakha.bundle"
 BUNDLE_ID = "com.carbongo.keyboardlayout.sakha"
-VERSION = "2.1.0"
+VERSION = "2.2.0"
 
 # Mac virtual keycodes, by the US keycap label
 K = {
@@ -265,7 +265,8 @@ def main():
     for name, layout_id, base, overrides in LAYOUTS:
         t = tables(base, overrides)
         (res / f"{name}.keylayout").write_text(keylayout(name, layout_id, t))
-        shutil.copy(ROOT / "src/icons" / f"{slug(name)}.icns", res / f"{name}.icns")  # tools/make-icons.swift
+        # Badge icons from tools/make-icons.swift; macOS ignores TISIconLabels for keyboard layouts.
+        shutil.copy(ROOT / "src/icons" / f"{slug(name)}.icns", res / f"{name}.icns")
         (ROOT / "docs/layouts" / f"{slug(name)}.svg").write_text(diagram(t, base))
     print(f"built {BUNDLE.name} v{VERSION}: {', '.join(n for n, *_ in LAYOUTS)}")
 

@@ -1,10 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## [2.2.0] - 2026-10-05
 
 ### Added
 - Apple-style menu bar badges instead of the generic keyboard glyph: filled/outlined **СА** for Sakha (Windows)/(Russian), and **SA** for Latin/Novgorodov.
+- Badges use macOS's own metrics (height, stroke, corners, letter size) and draw white, so the inline switcher matches native.
 - FAQ: the "developer can access anything you type" label, and why these layouts can't see your typing.
+
+### Changed
+- The installer enables only **Sakha (Windows)** by default; pick others in the prompt or with `-l`.
 
 ### Fixed
 - The installer clears System Settings' layout cache, so old flag icons no longer linger. It also checks that macOS really picked the layouts up.

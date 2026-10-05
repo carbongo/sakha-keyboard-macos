@@ -16,17 +16,20 @@ func render(_ text: String, filled: Bool, pixels: Int) -> Data {
   NSGraphicsContext.saveGraphicsState()
   let ctx = NSGraphicsContext(bitmapImageRep: rep)!
   NSGraphicsContext.current = ctx
+  // Metrics measured from macOS 27's own badges (A, РУ): 16 pt tall, 1 pt stroke, 3.5 pt corners,
+  // 8 pt cap height (SF 11 pt semibold). Layout icons must be square, so two letters use SF Condensed.
   let s = CGFloat(pixels) / 16  // design on a 16-pt grid
-  let line = 1.2 * s
-  let badge = NSRect(x: 0.6 * s, y: 2.6 * s, width: 14.8 * s, height: 10.8 * s)
-  let path = NSBezierPath(roundedRect: badge.insetBy(dx: line / 2, dy: line / 2), xRadius: 2.8 * s, yRadius: 2.8 * s)
-  NSColor.black.set()
+  let line = 1.0 * s
+  let badge = NSRect(x: 0, y: 0, width: 16 * s, height: 16 * s)
+  let path = NSBezierPath(roundedRect: badge.insetBy(dx: line / 2, dy: line / 2), xRadius: 3.5 * s, yRadius: 3.5 * s)
+  NSColor.white.set()  // template → tinted in the menu bar; untinted spots (inline switcher) then match native white
   if filled { path.fill() } else { path.lineWidth = line; path.stroke() }
 
-  let font = NSFont.systemFont(ofSize: 7.6 * s, weight: .semibold)
-  let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: NSColor.black, .kern: 0.15 * s]
+  let font = NSFont.systemFont(ofSize: 11 * s, weight: .semibold, width: text.count > 1 ? .condensed : .standard)
+  let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: NSColor.white]
   let size = (text as NSString).size(withAttributes: attrs)
-  let origin = NSPoint(x: badge.midX - size.width / 2, y: badge.midY - size.height / 2 + 0.1 * s)
+  let capCenter = font.capHeight / 2 - font.descender  // vertically centre the capitals, not the line box
+  let origin = NSPoint(x: badge.midX - size.width / 2, y: badge.midY - capCenter)
   if filled { ctx.compositingOperation = .destinationOut }  // knock the letters out of the filled badge
   (text as NSString).draw(at: origin, withAttributes: attrs)
   ctx.flushGraphics()

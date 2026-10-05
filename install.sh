@@ -10,6 +10,7 @@ REPO="carbongo/sakha-keyboard-macos"
 DEST="$HOME/Library/Keyboard Layouts"
 BUNDLE="Sakha.bundle"
 OLD_BUNDLES=("Sakha (Yakut).bundle")  # v1 — replaced by v2
+DEFAULT_LAYOUT="sakha-windows"  # what -y, a blank answer and non-interactive installs enable
 
 # key | keylayout ID (build.py) | menu name | description
 LAYOUTS=(
@@ -25,7 +26,7 @@ Sakha keyboard layouts for macOS
 
 Usage: install.sh [options]
 
-  -y, --yes             Don't ask; enable every layout
+  -y, --yes             Don't ask; enable Sakha (Windows) only
   -l, --layouts LIST    Comma-separated layouts to enable:
                         sakha-windows, sakha-russian, sakha-latin, sakha-novgorodov, all
       --no-enable       Install only; add layouts yourself in System Settings
@@ -74,25 +75,28 @@ choose_layouts() {  # prints selected keys, one per line
     tr ',' '\n' <<<"$SELECTED" | sed '/^$/d'
     return
   fi
-  if [[ $YES == 1 ]]; then for l in "${LAYOUTS[@]}"; do field "$l" 0; echo; done; return; fi
+  if [[ $YES == 1 || ! -r /dev/tty && $GUI == 0 ]]; then echo "$DEFAULT_LAYOUT"; return; fi
   if [[ $GUI == 1 ]]; then
-    local items="" l
-    for l in "${LAYOUTS[@]}"; do items+="\"$(field "$l" 2) — $(field "$l" 3)\","; done
+    local items="" first="" l
+    for l in "${LAYOUTS[@]}"; do
+      items+="\"$(field "$l" 2) — $(field "$l" 3)\","
+      [[ $(field "$l" 0) == "$DEFAULT_LAYOUT" ]] && first="\"$(field "$l" 2) — $(field "$l" 3)\""
+    done
     local picked
-    picked=$(osascript -e "choose from list {${items%,}} with title \"Sakha Keyboard\" with prompt \"Which layouts should be added to your input menu? (⌘-click to pick several)\" default items {${items%,}} with multiple selections allowed" 2>/dev/null) || true
+    picked=$(osascript -e "choose from list {${items%,}} with title \"Sakha Keyboard\" with prompt \"Which layouts should be added to your input menu? (⌘-click to pick several)\" default items {$first} with multiple selections allowed" 2>/dev/null) || true
     [[ -z $picked || $picked == false ]] && return
     for l in "${LAYOUTS[@]}"; do [[ $picked == *"$(field "$l" 2)"* ]] && { field "$l" 0; echo; }; done
     return
   fi
-  if [[ ! -r /dev/tty ]]; then for l in "${LAYOUTS[@]}"; do field "$l" 0; echo; done; return; fi
   {
     say ""; say "${B}Which layouts should be added to your input menu?${N}"
     local i=1 l
     for l in "${LAYOUTS[@]}"; do printf '  %s%d%s  %-20s %s%s%s\n' "$B" $i "$N" "$(field "$l" 2)" "$D" "$(field "$l" 3)" "$N"; i=$((i + 1)); done
-    printf '%s?%s Numbers separated by spaces %s[all]%s ' "$Y" "$N" "$D" "$N"
+    printf '%s?%s Numbers separated by spaces, or all %s[1]%s ' "$Y" "$N" "$D" "$N"
   } >/dev/tty
   local reply n; read -r reply </dev/tty || reply=
-  [[ -z $reply || $reply == all ]] && reply="1 2 3 4"
+  [[ -z $reply ]] && reply=1
+  [[ $reply == all ]] && reply="1 2 3 4"
   for n in ${reply//,/ }; do
     [[ $n =~ ^[1-4]$ ]] && { field "${LAYOUTS[$((n - 1))]}" 0; echo; }
   done

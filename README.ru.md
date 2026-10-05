@@ -30,7 +30,7 @@
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash
 ```
 
-Скрипт спросит, какие раскладки добавить. Переключение: **Ctrl+Пробел** или **🌐 Globe**. Выходить из системы не нужно.
+Скрипт спросит, какие раскладки добавить; Return — только **Sakha (Windows)**. Переключение: **Ctrl+Пробел** или **🌐 Globe**. Выходить из системы не нужно.
 
 Удаление: `… | bash -s -- -u`. Все параметры: `… | bash -s -- -h`.
 

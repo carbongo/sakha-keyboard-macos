@@ -32,7 +32,7 @@ Four layouts, one install, no restart:
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash
 ```
 
-It asks which layouts to add to your input menu. Then switch with **Ctrl+Space** or **🌐 Globe**. No logout or restart needed.
+It asks which layouts to add to your input menu; just press Return for **Sakha (Windows)**. Then switch with **Ctrl+Space** or **🌐 Globe**. No logout or restart needed.
 
 <details>
 <summary>Options</summary>
@@ -41,8 +41,8 @@ It asks which layouts to add to your input menu. Then switch with **Ctrl+Space**
 # pick layouts without prompts
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -l sakha-windows,sakha-latin
 
-# everything, no questions
-curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -y
+# all four layouts, no questions
+curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -l all
 
 # uninstall
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash -s -- -u
@@ -51,7 +51,7 @@ curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/
 | Flag | |
 |---|---|
 | `-l, --layouts` | `sakha-windows`, `sakha-russian`, `sakha-latin`, `sakha-novgorodov` or `all` |
-| `-y, --yes` | Don't ask; add every layout |
+| `-y, --yes` | Don't ask; add Sakha (Windows) only |
 | `--no-enable` | Only install; add layouts in System Settings yourself |
 | `-v, --version` | A specific release, e.g. `v2.0.0` |
 | `-u, --uninstall` | Remove everything |

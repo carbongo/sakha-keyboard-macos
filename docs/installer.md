@@ -12,5 +12,5 @@
 | Verify | `tis register` returns how many Sakha layouts are live; it retries up to 5×, then asks for a logout |
 | Uninstall | Remove those pref entries by layout ID, delete the bundle |
 
-- Prompts read `/dev/tty`, so they work under `curl | bash`. With no tty, every layout is enabled.
+- Prompts read `/dev/tty`, so they work under `curl | bash`. Default (`-y`, blank answer, no tty): `DEFAULT_LAYOUT` = Sakha (Windows) only.
 - Must stay bash 3.2-compatible (`/bin/bash` on macOS).
