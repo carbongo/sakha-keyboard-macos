@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.carbongo.keyboardlayout.sakha</string>
+	<key>CFBundleName</key>
+	<string>Sakha</string>
+	<key>CFBundleVersion</key>
+	<string>2.0</string>
+	<key>KLInfo_Sakha (Russian)</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
+		<key>TISIntendedLanguage</key>
+		<string>sah-Cyrl</string>
+	</dict>
+	<key>KLInfo_Russian (Sakha)</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
+		<key>TISIntendedLanguage</key>
+		<string>sah-Cyrl</string>
+	</dict>
+	<key>KLInfo_Sakha (Latin)</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
+		<key>TISIntendedLanguage</key>
+		<string>sah-Latn</string>
+	</dict>
+	<key>KLInfo_Sakha (Novgorodov)</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
+		<key>TISIntendedLanguage</key>
+		<string>sah-Latn</string>
+	</dict>
+</dict>
+</plist>
