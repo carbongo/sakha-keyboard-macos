@@ -15,8 +15,8 @@
 
 | Раскладка | Основа | Где буквы саха |
 |---|---|---|
-| **Sakha (Russian)** | Русская (Mac) | Цифровой ряд, как в «Саха» для Windows |
-| **Russian (Sakha)** | Русская (Mac) | **Opt** + похожая русская буква |
+| **Sakha (Windows)** | Русская (Mac) | Цифровой ряд, как в «Саха» для Windows |
+| **Sakha (Russian)** | Русская (Mac) | **Opt** + похожая русская буква |
 | **Sakha (Latin)** | US | Общетюркская латиница |
 | **Sakha (Novgorodov)** | US | Алфавит Новгородова (1920-е) |
 
@@ -52,13 +52,13 @@ curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/
 
 Крупная подпись — что печатает клавиша сама по себе (с Shift — заглавная). Мелкая розовая подпись — **Opt**, а верхняя из них — **Shift+Opt**. Синие клавиши отличаются от исходной раскладки.
 
-### Sakha (Russian)
-![Sakha (Russian)](docs/layouts/sakha-russian.svg)
+### Sakha (Windows)
+![Sakha (Windows)](docs/layouts/sakha-windows.svg)
 
-### Russian (Sakha)
+### Sakha (Russian)
 Opt+г ҕ · Opt+н ҥ · Opt+о ө · Opt+у ү · Opt+х һ · Opt+д дь · Opt+ь нь
 
-![Russian (Sakha)](docs/layouts/russian-sakha.svg)
+![Sakha (Russian)](docs/layouts/sakha-russian.svg)
 
 ### Sakha (Latin)
 ҕ ğ · ҥ ñ · ө ö · ү ü · ы ı · ч ç · дь j · нь ń · й y

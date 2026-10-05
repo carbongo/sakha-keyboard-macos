@@ -6,7 +6,7 @@ body:
     id: layout
     attributes:
       label: Layout
-      options: [Sakha (Russian), Russian (Sakha), Sakha (Latin), Sakha (Novgorodov), A new layout]
+      options: [Sakha (Windows), Sakha (Russian), Sakha (Latin), Sakha (Novgorodov), A new layout]
     validations:
       required: true
   - type: textarea

@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0] - 2026-10-05
+
+### Changed
+- Renamed **Sakha (Russian)** → **Sakha (Windows)** and **Russian (Sakha)** → **Sakha (Russian)**. The installer keys changed too: `sakha-windows`, `sakha-russian`.
+- README and the bundled read-me explain the "Apple could not verify…" warning and the **Open Anyway** steps.
+
 ## [2.0.0] - 2026-10-05
 
 ### Added

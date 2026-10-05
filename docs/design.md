@@ -11,14 +11,14 @@ macOS 27 ships `com.apple.keylayout.Yakut`, which puts ү ҥ ҕ ө һ in place o
 - Cmd and Ctrl layers are always US QWERTY, so shortcuts don't change.
 - Caps Lock = Shift for letter outputs.
 - US Opt dead keys (e u i n `) only type their spacing accent.
-- No icons (modern macOS shows text badges). macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaRussian`, …).
+- No icons (modern macOS shows text badges). macOS derives the input-source IDs itself (`com.carbongo.keyboardlayout.sakha.keylayout.SakhaWindows`, …).
 
 ## Decisions
 
 | Layout | Decision |
 |---|---|
-| Sakha (Russian) | Clone of Windows KBDYAK (kbdlayout.info/kbdyak). ё stays on its Mac key. Windows has no digits, so they go on Opt+number. |
-| Russian (Sakha) | Opt pairs by lookalike shape. дь on Opt+д; нь on Opt+ь, because Opt+н is ҥ. |
+| Sakha (Windows) | Clone of Windows KBDYAK (kbdlayout.info/kbdyak). ё stays on its Mac key. Windows has no digits, so they go on Opt+number. |
+| Sakha (Russian) | Opt pairs by lookalike shape. дь on Opt+д; нь on Opt+ь, because Opt+н is ҥ. |
 | Sakha (Latin) | Common Turkic: ҕ ğ, ҥ ñ, ө ö, ү ü, ы ı, ч ç, дь j, нь ń, й y. Turkic casing (i/İ, ı/I). Own keys plus Opt backups. |
 | Sakha (Novgorodov) | Closest IPA letters: ɯ ɣ ɟ ŋ ɲ ø; c = ч. Diphthong keys type digraphs. Opt = vowel+ː or doubled consonant. Holding a key can't be detected by a keylayout, so Opt is used. |
 | Sakha (Cyrillic) on US | Dropped as redundant. |

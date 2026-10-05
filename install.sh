@@ -13,8 +13,8 @@ OLD_BUNDLES=("Sakha (Yakut).bundle")  # v1 — replaced by v2
 
 # key | keylayout ID (build.py) | menu name | description
 LAYOUTS=(
-  "sakha-russian|-19001|Sakha (Russian)|Windows-style: Sakha letters on the number row"
-  "russian-sakha|-19002|Russian (Sakha)|Plain Russian, Sakha letters on Opt"
+  "sakha-windows|-19001|Sakha (Windows)|Windows-style: Sakha letters on the number row"
+  "sakha-russian|-19002|Sakha (Russian)|Plain Russian, Sakha letters on Opt"
   "sakha-latin|-19003|Sakha (Latin)|Common Turkic Latin alphabet"
   "sakha-novgorodov|-19004|Sakha (Novgorodov)|1920s Novgorodov alphabet"
 )
@@ -27,7 +27,7 @@ Usage: install.sh [options]
 
   -y, --yes             Don't ask; enable every layout
   -l, --layouts LIST    Comma-separated layouts to enable:
-                        sakha-russian, russian-sakha, sakha-latin, sakha-novgorodov, all
+                        sakha-windows, sakha-russian, sakha-latin, sakha-novgorodov, all
       --no-enable       Install only; add layouts yourself in System Settings
   -v, --version TAG     Install a specific release (default: latest)
   -u, --uninstall       Remove the layouts
@@ -36,7 +36,7 @@ Usage: install.sh [options]
 
 Examples:
   curl -fsSL https://raw.githubusercontent.com/$REPO/main/install.sh | bash
-  curl -fsSL https://raw.githubusercontent.com/$REPO/main/install.sh | bash -s -- -l sakha-russian,sakha-latin
+  curl -fsSL https://raw.githubusercontent.com/$REPO/main/install.sh | bash -s -- -l sakha-windows,sakha-latin
 EOF
 }
 

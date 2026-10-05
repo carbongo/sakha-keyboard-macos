@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 BUNDLE = ROOT / "Sakha.bundle"
 BUNDLE_ID = "com.carbongo.keyboardlayout.sakha"
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 
 # Mac virtual keycodes, by the US keycap label
 K = {
@@ -33,8 +33,8 @@ def upper(s):
     return s[:1].upper() + s[1:] if s else s
 
 
-# ── Sakha (Russian): Windows "Sakha" (KBDYAK) on Mac Russian; digits on Opt ──
-sakha_russian = {
+# ── Sakha (Windows): Windows "Sakha" (KBDYAK) on Mac Russian; digits on Opt ──
+sakha_windows = {
     K["`"]: ('"', "№", "]", "["),
     K["1"]: ("!", "?", "1", "!"),
     **{K[k]: (low, upper(low), k, US_SHIFT_DIGITS[k]) for k, low in
@@ -44,8 +44,8 @@ sakha_russian = {
     K["/"]: (".", ",", "/", "\\"),
 }
 
-# ── Russian (Sakha): Mac Russian untouched; Opt + lookalike letter = Sakha letter ──
-russian_sakha = {
+# ── Sakha (Russian): Mac Russian untouched; Opt + lookalike letter = Sakha letter ──
+sakha_russian = {
     K[k]: (None, None, low, upper(low)) for k, low in [
         ("u", "ҕ"),   # г
         ("y", "ҥ"),   # н
@@ -105,8 +105,8 @@ novgorodov.update({  # punctuation pushed off [ ] ; ' \
 })
 
 LAYOUTS = [  # (name, id, base, overrides)
-    ("Sakha (Russian)", -19001, "russian", sakha_russian),
-    ("Russian (Sakha)", -19002, "russian", russian_sakha),
+    ("Sakha (Windows)", -19001, "russian", sakha_windows),
+    ("Sakha (Russian)", -19002, "russian", sakha_russian),
     ("Sakha (Latin)", -19003, "us", sakha_latin),
     ("Sakha (Novgorodov)", -19004, "us", novgorodov),
 ]
