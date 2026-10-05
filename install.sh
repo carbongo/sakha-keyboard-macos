@@ -126,7 +126,7 @@ EOF
 
 # ── commands ────────────────────────────────────────────────────────────
 fetch_bundle() {  # prints the path of a Sakha.bundle to install
-  local here; here=$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)
+  local here; here=$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd) || here=""
   if [[ -n $here && -d $here/$BUNDLE && -z $VERSION ]]; then printf '%s' "$here/$BUNDLE"; return; fi
   local url="https://github.com/$REPO/releases/latest/download/Sakha-Keyboard.zip"
   [[ -n $VERSION ]] && url="https://github.com/$REPO/releases/download/$VERSION/Sakha-Keyboard.zip"
