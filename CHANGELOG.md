@@ -2,10 +2,18 @@
 
 ## [Unreleased]
 
+## [2.3.2] - 2026-10-05
+
+### Fixed
+- macOS 27: layouts no longer appear twice (or more) in the input menu and System Settings. The installer now enables them in macOS 27's own list of third-party layouts and clears them from the old one; macOS counted a layout once per list. Run the installer once and log out to clean up.
+
+### Changed
+- macOS 27 needs one logout after installing: its input menu picks up new layouts only at login. Older macOS still shows them right away.
+
 ## [2.3.1] - 2026-10-05
 
 ### Fixed
-- Reinstalling no longer piles up copies of a layout in System Settings. Running the installer once repairs the settings; a logout clears the copies already listed.
+- Layout IDs are saved as integers, as macOS does (not the duplicates fix; see 2.3.2).
 
 ## [2.3.0] - 2026-10-05
 

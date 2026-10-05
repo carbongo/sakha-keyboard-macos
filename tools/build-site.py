@@ -62,9 +62,9 @@ S = {
     "btn_install": {"en": "Install", "ru": "Установить", "sah": "Туруор"},
     "btn_zip": {"en": "Download .zip", "ru": "Скачать .zip", "sah": ".zip хачайдаа"},
     "hint_switch": {
-        "en": f"Then switch with {K('Ctrl')} {K('Space')} or {K('🌐')}. No logout needed.",
-        "ru": f"Переключение: {K('Ctrl')} {K('Пробел')} или {K('🌐')}. Выходить из системы не нужно.",
-        "sah": f"Раскладканы {K('Ctrl')} {K('Space')} эбэтэр {K('🌐')} көмөтүнэн уларыт. Систематтан тахсар наадата суох.",
+        "en": f"Then switch with {K('Ctrl')} {K('Space')} or {K('🌐')}. On macOS 27, log out and back in once first.",
+        "ru": f"Переключение: {K('Ctrl')} {K('Пробел')} или {K('🌐')}. В macOS 27 сначала один раз выйдите из системы и войдите снова.",
+        "sah": f"Раскладканы {K('Ctrl')} {K('Space')} эбэтэр {K('🌐')} көмөтүнэн уларыт. macOS 27-ҕэ иннинэ биирдэ систематтан тахсан баран төттөрү киир.",
     },
     "why_eyebrow": {"en": "Why this one", "ru": "Почему эти", "sah": "Тоҕо бу"},
     "why_h2": {
@@ -209,14 +209,14 @@ S = {
     },
     "faq_h2": {"en": "Questions, answered.", "ru": "Ответы на вопросы.", "sah": "Ыйытыыларга хоруйдар."},
     "q1": {
-        "en": "Do I really not need to log out?",
-        "ru": "Правда не нужно выходить из системы?",
-        "sah": "Систематтан тахсар наадата чахчы суох дуо?",
+        "en": "Do I need to log out?",
+        "ru": "Нужно ли выходить из системы?",
+        "sah": "Систематтан тахсар наада дуо?",
     },
     "a1": {
-        "en": "No. The installer registers the bundle through macOS's Text Input Sources API, so the layouts appear immediately. Apps that were already open may pick them up only after a relaunch.",
-        "ru": "Не нужно. Установщик регистрирует раскладки через API Text Input Sources в macOS, поэтому они появляются сразу. Некоторые уже открытые программы увидят их только после перезапуска.",
-        "sah": "Суох. Туруорааччы бандылы macOS Text Input Sources API нөҥүө бэлиэтиир, онон раскладкалар тута көстөллөр. Урут аһыллыбыт сорох программалар кинилэри саҥаттан холбонно эрэ көрүөхтэрин сөп.",
+        "en": "On macOS 27, yes, once: it shows new layouts in the input menu only after a login. On older macOS, no: the installer registers them through the Text Input Sources API, so they appear right away. No restart either way.",
+        "ru": "В macOS 27 — да, один раз: новые раскладки появляются в меню ввода только после входа в систему. В более старых macOS — нет: установщик регистрирует их через API Text Input Sources, и они появляются сразу. Перезагрузка не нужна в любом случае.",
+        "sah": "macOS 27-ҕэ — наада, биирдэ: саҥа раскладкалар меню ввода иһигэр систематтан тахсан баран төттөрү киирдэххэ эрэ көстөллөр. Эргэ macOS-ка — наадата суох: туруорааччы кинилэри Text Input Sources API нөҥүө бэлиэтиир, онон тута көстөллөр. Перезагрузка хайа да түгэҥҥэ наадата суох.",
     },
     "q2": {
         "en": "Why does macOS say it “could not verify” the installer? Is it safe?",

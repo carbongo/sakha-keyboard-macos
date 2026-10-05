@@ -44,7 +44,7 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <span class="pill"><span class="dot"></span><b id="ver">v2.3.1</b> · macOS 12+ · MIT · free</span>
+    <span class="pill"><span class="dot"></span><b id="ver">v2.3.2</b> · macOS 12+ · MIT · free</span>
     <h1>Type in <span class="grad">Sakha</span> on&nbsp;a&nbsp;Mac.</h1>
     <p class="lede">Four keyboard layouts for Sakha (Yakut) — without losing a single Russian or English letter. One install, no restart.</p>
 
@@ -75,7 +75,7 @@
         <button class="copy" data-copy="cmd" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 6.75C0 5.78.78 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .14.11.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .78 5.78 0 6.75 0h7.5C15.22 0 16 .78 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .14.11.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/></svg><span>Copy</span></button>
       </div>
     </div>
-    <p class="hint">Then switch with <kbd>Ctrl</kbd> <kbd>Space</kbd> or <kbd>🌐</kbd>. No logout needed.</p>
+    <p class="hint">Then switch with <kbd>Ctrl</kbd> <kbd>Space</kbd> or <kbd>🌐</kbd>. On macOS 27, log out and back in once first.</p>
   </div>
 </header>
 
@@ -203,7 +203,7 @@
       <h2>Questions, answered.</h2>
     </div>
     <div class="faq">
-      <details><summary>Do I really not need to log out?</summary><p>No. The installer registers the bundle through macOS's Text Input Sources API, so the layouts appear immediately. Apps that were already open may pick them up only after a relaunch.</p></details>
+      <details><summary>Do I need to log out?</summary><p>On macOS 27, yes, once: it shows new layouts in the input menu only after a login. On older macOS, no: the installer registers them through the Text Input Sources API, so they appear right away. No restart either way.</p></details>
       <details><summary>Why does macOS say it “could not verify” the installer? Is it safe?</summary><p>macOS shows that for every downloaded script or app Apple hasn't notarised — it doesn't mean malware was found. The <code>.command</code> files only run <code>install.sh</code>, which copies <code>Sakha.bundle</code> to <code>~/Library/Keyboard Layouts</code> and adds the layouts to your input menu. The Terminal one-liner shows no warning, because files fetched with <code>curl</code> aren't flagged as downloads.</p></details>
       <details><summary>Will ⌘C / ⌘V still work?</summary><p>Yes. Cmd and Ctrl shortcuts always use the US QWERTY positions in every layout.</p></details>
       <details><summary>System Settings says “The developer can access anything you type”. Do you collect anything?</summary><p><b>No. Nothing is collected, sent or stored.</b> macOS 27 shows that label on every keyboard layout that doesn't come from Apple. These layouts contain no code: an <code>Info.plist</code>, four <code>.keylayout</code> XML tables and four icons. The installer runs once, copies the files and exits — no background process, no telemetry.</p></details>

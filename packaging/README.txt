@@ -3,7 +3,7 @@ https://github.com/carbongo/sakha-keyboard-macos
 
 INSTALL
 Double-click "Install Sakha Keyboard.command" and pick your layouts.
-No restart or logout needed.
+No restart needed. On macOS 27, log out and back in once to see the layouts in the input menu.
 
 If macOS says it can't verify the developer:
   1. Click Done (or Cancel).
@@ -26,7 +26,7 @@ Ctrl+Space or the Globe (🌐) key, or the input menu in the menu bar.
 
 УСТАНОВКА
 Дважды щёлкните «Install Sakha Keyboard.command» и выберите раскладки.
-Перезагрузка и выход из системы не нужны.
+Перезагрузка не нужна. В macOS 27 один раз выйдите из системы и войдите снова, чтобы раскладки появились в меню ввода.
 
 Если macOS не может проверить разработчика:
   1. Нажмите «Готово» (или «Отменить»).

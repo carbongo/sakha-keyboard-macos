@@ -104,11 +104,14 @@ choose_layouts() {  # prints selected keys, one per line
 
 # ── Text Input Sources (JavaScript for Automation, ships with macOS) ────
 tis() {  # register <bundle> [id|name ...]  |  remove [id|name ...]
-  # TISEnableInputSource silently ignores user-installed layouts (macOS 27), so this edits the
-  # AppleEnabledInputSources pref the input menu reads; it picks the change up immediately.
+  # Edits the enabled-layouts prefs directly: TISEnableInputSource ignores user-installed layouts.
+  # Up to macOS 26 that is HIToolbox AppleEnabledInputSources, read live after TISRegisterInputSource.
+  # macOS 27 keeps third-party layouts in com.apple.inputsources and enables a layout once per list it
+  # is in, so ours must be there only; the menu picks it up at the next login.
   local js="$TMP/tis.js"
   cat >"$js" <<'EOF'
 ObjC.import('Carbon');
+const OURS = [-19001, -19002, -19003, -19004];  // build.py layout IDs
 function ours(includeDisabled) {  // how many of our layouts macOS lists
   const list = ObjC.castRefToObject($.TISCreateInputSourceList($(), includeDisabled));
   let count = 0;
@@ -118,47 +121,52 @@ function ours(includeDisabled) {  // how many of our layouts macOS lists
   }
   return count;
 }
-function run(argv) {
-  const action = argv.shift();
-  const bundle = action === 'register' ? argv.shift() : null;
-  // Registering a bundle macOS already knows lists its layouts twice.
-  if (bundle && ours(true) === 0) $.TISRegisterInputSource($.NSURL.fileURLWithPath(bundle));
-  const wanted = argv.map(a => { const [id, name] = a.split('|'); return { id: Number(id), name: name }; });
-  const prefs = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.HIToolbox');
-  const key = 'AppleEnabledInputSources';
-  // Layout IDs must stay <integer>: a JS number is saved as <real>, which macOS no longer matches
-  // to the layout, so it lists it again — once per install. Earlier installs left reals; fix those too.
+// Rewrites one enabled list: drops the IDs in `drop`, then appends `add`. Layout IDs must stay
+// <integer>: a JS number saves as <real>, which macOS no longer matches to the layout.
+function edit(domain, key, drop, add) {
+  const prefs = $.NSUserDefaults.alloc.initWithSuiteName(domain);
   let hadReal = false;
-  const entry = e => {
-    const d = $.NSMutableDictionary.dictionaryWithDictionary(e);
-    const id = d.objectForKey('KeyboardLayout ID');
-    if (id.isNil()) return d;
-    if ('fd'.includes(id.objCType)) hadReal = true;
-    d.setObjectForKey($.NSNumber.numberWithInt(id.intValue), 'KeyboardLayout ID');
-    return d;
-  };
-  const current = ObjC.unwrap(prefs.arrayForKey(key)) || [];
   const next = $.NSMutableArray.array;
-  current.forEach(e => {
+  (ObjC.unwrap(prefs.arrayForKey(key)) || []).forEach(e => {
     const id = e.objectForKey('KeyboardLayout ID');
-    if (id.isNil() || !wanted.some(w => id.intValue === w.id)) next.addObject(entry(e));
+    if (!id.isNil() && drop.includes(id.intValue)) return;
+    const d = $.NSMutableDictionary.dictionaryWithDictionary(e);
+    if (!id.isNil()) {
+      if ('fd'.includes(id.objCType)) hadReal = true;
+      d.setObjectForKey($.NSNumber.numberWithInt(id.intValue), 'KeyboardLayout ID');
+    }
+    next.addObject(d);
   });
-  if (action === 'register') {
-    wanted.forEach(w => {
-      const d = $.NSMutableDictionary.dictionary;
-      d.setObjectForKey($('Keyboard Layout'), 'InputSourceKind');
-      d.setObjectForKey($.NSNumber.numberWithInt(w.id), 'KeyboardLayout ID');
-      d.setObjectForKey($(w.name), 'KeyboardLayout Name');
-      next.addObject(d);
-    });
-  }
+  add.forEach(w => {
+    const d = $.NSMutableDictionary.dictionary;
+    d.setObjectForKey($('Keyboard Layout'), 'InputSourceKind');
+    d.setObjectForKey($.NSNumber.numberWithInt(w.id), 'KeyboardLayout ID');
+    d.setObjectForKey($(w.name), 'KeyboardLayout Name');
+    next.addObject(d);
+  });
   if (hadReal) prefs.removeObjectForKey(key);  // otherwise int == real and the reals stay
   prefs.setObjectForKey(next, key);
   prefs.synchronize;
+}
+function run(argv) {
+  const modern = argv.shift() === '1';
+  const action = argv.shift();
+  const bundle = action === 'register' ? argv.shift() : null;
+  const wanted = argv.map(a => { const [id, name] = a.split('|'); return { id: Number(id), name: name }; });
+  const ids = wanted.map(w => w.id);
+  const add = action === 'register' ? wanted : [];
+  if (modern) {
+    edit('com.apple.HIToolbox', 'AppleEnabledInputSources', OURS, []);
+    edit('com.apple.inputsources', 'AppleEnabledThirdPartyInputSources', ids, add);
+  } else {
+    // Registering a bundle macOS already knows lists its layouts twice.
+    if (bundle && ours(true) === 0) $.TISRegisterInputSource($.NSURL.fileURLWithPath(bundle));
+    edit('com.apple.HIToolbox', 'AppleEnabledInputSources', ids, add);
+  }
   return ours(false);  // how many are now enabled
 }
 EOF
-  osascript -l JavaScript "$js" "$@" 2>/dev/null
+  osascript -l JavaScript "$js" "$MODERN" "$@" 2>/dev/null
 }
 
 # ── commands ────────────────────────────────────────────────────────────
@@ -222,15 +230,20 @@ install() {
   done
   if [[ $live -lt ${#ids[@]} ]]; then
     warn "macOS hasn't picked the layouts up yet. Log out and back in, or run the installer again."
-  else
+  elif [[ $MODERN == 0 ]]; then
     ok "Registered with macOS — no logout needed"
   fi
   for l in ${names[@]+"${names[@]}"}; do ok "Added $l to the input menu"; done
 
+  local finish="" gui_finish=""
+  if [[ $MODERN == 1 && ${#ids[@]} -gt 0 ]]; then
+    finish="${B}Log out and back in${N} to see them in the input menu (macOS 27 refreshes it only at login). "
+    gui_finish="Log out and back in to see them in the input menu.\n\n"
+  fi
   say ""
-  say "${B}Done.${N} Switch layouts with ${B}Ctrl+Space${N} or ${B}🌐 Globe${N}, or from the input menu."
+  say "${B}Done.${N} ${finish}Switch layouts with ${B}Ctrl+Space${N} or ${B}🌐 Globe${N}, or from the input menu."
   say "Add or remove layouts: System Settings → Keyboard → Text Input → Edit."
-  [[ $GUI == 1 ]] && dialog "Sakha keyboard layouts are installed.\n\nSwitch with Ctrl+Space or the Globe key. Add more in System Settings → Keyboard → Text Input → Edit."
+  [[ $GUI == 1 ]] && dialog "Sakha keyboard layouts are installed.\n\n${gui_finish}Switch with Ctrl+Space or the Globe key. Add more in System Settings → Keyboard → Text Input → Edit."
   return 0
 }
 
@@ -265,6 +278,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ $(uname -s) == Darwin ]] || die "These layouts are for macOS."
+MODERN=0  # macOS 27+: separate third-party layout list, menu refreshes only at login
+[[ $(sw_vers -productVersion | cut -d. -f1) -ge 27 ]] && MODERN=1
 TMP=$(mktemp -d -t sakha-keyboard)
 trap 'rm -rf "$TMP"' EXIT
 "$ACTION"

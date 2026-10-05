@@ -32,7 +32,7 @@ Four layouts, one install, no restart:
 curl -fsSL https://raw.githubusercontent.com/carbongo/sakha-keyboard-macos/main/install.sh | bash
 ```
 
-It asks which layouts to add to your input menu; just press Return for **Sakha (Windows)**. Then switch with **Ctrl+Space** or **🌐 Globe**. No logout or restart needed.
+It asks which layouts to add to your input menu; just press Return for **Sakha (Windows)**. Then switch with **Ctrl+Space** or **🌐 Globe**. On macOS 27, log out and back in once to see them in the input menu; older macOS shows them right away. No restart needed.
 
 <details>
 <summary>Options</summary>
@@ -110,9 +110,9 @@ The 1920s Novgorodov alphabet, typed with the closest IPA letters: ɯ ɣ ɟ ŋ �
 ## ❓ FAQ
 
 <details>
-<summary><b>Do I really not need to log out?</b></summary>
+<summary><b>Do I need to log out?</b></summary>
 
-No logout needed. The installer registers the bundle through macOS's Text Input Sources API, so the layouts appear immediately. Some apps that were already open may pick them up only after a relaunch.
+On macOS 27, yes, once: it shows new layouts in the input menu only after a login. On older macOS, no: the installer registers them through the Text Input Sources API, so they appear right away. No restart either way.
 
 </details>
 
