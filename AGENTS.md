@@ -1,6 +1,6 @@
 # sakha-keyboard-macos
 
-macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installers. README.md (+ README.ru.md) is the user-facing guide.
+macOS keyboard layout bundle `Sakha.bundle` with 4 Sakha layouts, plus installers. README.md (+ `.ru`, `.sah`) is the user-facing guide; CONTRIBUTING.md (+ `.sah`) the contributor one. Keep translations in step.
 
 ## Commands
 

@@ -9,7 +9,7 @@
 ![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-**English** · [Русский](README.ru.md)
+**English** · [Русский](README.ru.md) · [Сахалыы](README.sah.md)
 
 </div>
 

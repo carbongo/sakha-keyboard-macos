@@ -7,7 +7,7 @@
 [![Release](https://img.shields.io/github/v/release/carbongo/sakha-keyboard-macos?label=release)](https://github.com/carbongo/sakha-keyboard-macos/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[English](README.md) · **Русский**
+[English](README.md) · **Русский** · [Сахалыы](README.sah.md)
 
 </div>
 
