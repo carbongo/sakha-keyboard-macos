@@ -1,7 +1,8 @@
-// Draws the input-menu icons: bare white letters, like the labels macOS shows for its own layouts in the
-// input switcher (РУ, A). Keyboard layouts can't use Apple's text labels (TISIconLabels works only for
-// input methods), so this square image is used everywhere. It is not a template: a template turns dark
-// in the switcher and vanishes in its blue selection.
+// Draws the input-menu icons: filled badges with knocked-out letters, like Apple's own (A, Ca).
+// Keyboard layouts can't use Apple's text labels (TISIconLabels works only for input methods), so this
+// square image is used everywhere. It is a template (TISIconIsTemplate): dark on a light menu bar or menu,
+// white on a dark one or when highlighted. Filled, so it stays visible on the switcher's blue selection,
+// where templates are drawn dark.
 // Usage: swift tools/make-icons.swift   → src/icons/*.icns (commit them; build.py copies them)
 import AppKit
 
@@ -17,18 +18,23 @@ func render(_ text: String, pixels: Int) -> Data {
                              samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB,
                              bytesPerRow: 0, bitsPerPixel: 0)!
   NSGraphicsContext.saveGraphicsState()
-  NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
-  // Native label metrics (measured on macOS 27): SF semibold, 8 pt cap height ≈ 11 pt type.
+  let ctx = NSGraphicsContext(bitmapImageRep: rep)!
+  NSGraphicsContext.current = ctx
+  // Metrics of macOS 27's own badges (A, Ca): 16 pt tall, 3.5 pt corners, 8 pt cap height (SF 11 pt semibold).
   let s = CGFloat(pixels) / 16  // design on a 16-pt grid
+  let badge = NSRect(x: 0, y: 0, width: 16 * s, height: 16 * s)
+  NSColor.black.set()
+  NSBezierPath(roundedRect: badge, xRadius: 3.5 * s, yRadius: 3.5 * s).fill()
   var font = NSFont.systemFont(ofSize: 11 * s, weight: .semibold)
-  var size = (text as NSString).size(withAttributes: [.font: font])
-  if size.width > 16 * s {  // too wide for the square icon: condensed, same height
+  if (text as NSString).size(withAttributes: [.font: font]).width > 13 * s {  // keep a margin inside the badge
     font = NSFont.systemFont(ofSize: 11 * s, weight: .semibold, width: .condensed)
-    size = (text as NSString).size(withAttributes: [.font: font])
   }
+  let size = (text as NSString).size(withAttributes: [.font: font])
   let capCenter = font.capHeight / 2 - font.descender  // centre the capitals, not the line box
-  let origin = NSPoint(x: 8 * s - size.width / 2, y: 8 * s - capCenter)
-  (text as NSString).draw(at: origin, withAttributes: [.font: font, .foregroundColor: NSColor.white])
+  let origin = NSPoint(x: badge.midX - size.width / 2, y: badge.midY - capCenter)
+  ctx.compositingOperation = .destinationOut  // knock the letters out of the badge
+  (text as NSString).draw(at: origin, withAttributes: [.font: font, .foregroundColor: NSColor.black])
+  ctx.flushGraphics()
   NSGraphicsContext.restoreGraphicsState()
   return rep.representation(using: .png, properties: [:])!
 }
