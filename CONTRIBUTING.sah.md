@@ -2,7 +2,7 @@
 
 [English](CONTRIBUTING.md) · **Сахалыы**
 
-Саха тылынан саҥарааччылар санаалара — саамай күндү кыттыы. Ханнык эмэ буукуба табыгаһа суох сиргэ турар буоллаҕына, [issue аһ](https://github.com/carbongo/sakha-keyboard-macos/issues/new/choose).
+Саха тылынан саҥарааччылар санаалара — саамай күндү кыттыы. Ханнык эмэ буукуба табыгаһа суох сиргэ турар буоллаҕына, [issue ас](https://github.com/carbongo/sakha-keyboard-macos/issues/new/choose).
 
 ## Раскладканы уларытыы
 
