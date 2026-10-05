@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-10-05
+
 ### Changed
 - Input menu icons are now bare white letters like the native ones in the switcher (**СА** Windows, **СР** Russian, **SA** Latin, **NV** Novgorodov), no longer template badges, which turned dark in the switcher and vanished when selected.
 
