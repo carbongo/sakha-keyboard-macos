@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Fixed
-- Menu bar and input menu icons are templates again, so they're dark on a light menu bar or menu and white on a dark one or when highlighted, like Apple's.
+- Icons are filled badges like Apple's (**A**, **Ca**): dark on a light menu bar or menu, white on a dark one or when highlighted, and still visible on the switcher's blue selection.
 - System Settings no longer shows a second "Sakha" language: the Cyrillic layouts sit under Apple's **Sakha**, the Latin ones under **Sakha (Latin)**.
 
 ## [2.2.1] - 2026-10-05
